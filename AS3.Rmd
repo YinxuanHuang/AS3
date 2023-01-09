@@ -1,0 +1,106 @@
+---title: "AS3"
+author: "YinxuanHuang"
+date: "2023-01-06"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Task 1
+##a)
+```{R defination}
+###This function demostrates the position of us on the hill.
+### y demonstrates the height in the position x 
+f <- function(x){
+  0.5*(x^3) + x^2 -(3*x) +10
+}
+### Descent function
+### y demonstrates the descent of the position x
+df<- function(x){
+  1.5*(x^2) +2*x - 3 
+}
+```
+
+##b)
+
+$$f(x)=0.5x^3 + x^2 -3x +10$$
+
+  
+$$df(x)= 1.5x^2 + 2x - 3$$
+
+
+##c)
+```{R Plot function}
+plot(f,
+  xlim = c(-3.2,3.2),ylim = c(8,24),
+  main = "Hiking with friends",
+  xlab = "Distance in Km",
+  ylab = "Altitude (x100m)",
+  type = "l",
+  col = "Green"
+)
+abline(v = 0,lty = 2, )
+points(x=2.5,y=f(2.5),pch = 1,col = "Red",cex = 2)
+x = c(-3.2:3.2)
+points(x[which.min(f(x))],min(f(x)), pch = 4, col = "Red", cex = 2)
+```
+
+##d)
+```{r for-loop}
+plot(f,
+  xlim = c(-3.2,3.2),ylim = c(8,24),
+  main = "Hiking with friends",
+  xlab = "Distance in Km",
+  ylab = "Altitude (x100m)",
+  type = "l",
+  col = "Green"
+)
+abline(v = 0,lty = 2, )
+points(x[which.min(f(x))],min(f(x)), pch = 4, col = "Red", cex = 2)
+location = 2.5
+for (i in 0:10)(
+  location= 2.5-0.001*df(location)
+  
+)
+points(location,f(location))
+
+```
+##e)
+```{r possibility}
+location = 2.5-0.25*df(2.5)
+print(location)
+print(f(location))
+##we now have the location (-0.345,11,129) which means we've reached a point that located left of the pub,which means we've gone too far.
+```
+
+##f)
+```{r function downhill}
+### function downhill
+### this function helps us calculating the number of  step necessary to reach the pub
+### Arguments
+### f : the hill function
+### df: the descent of hill function
+### x_start: start location
+### stepsize: how far we can go by one step
+### tol: margin of error
+downhill <- function(f,df,x_start,stepsize,tol = 0.01){
+  location1 = x_start
+  i = 0
+  while ( abs( df( location1))>0.1){
+  location1 = location1- 0.1*df(location1) 
+  i = i + 1
+
+  result <- list(
+    final_location <- location1,
+    value_of_f_in_final_location <- f(location1),
+    value_of_df_in_final_location <- df(location1),
+    Number_of_Steps <- i 
+  )
+  return(result)
+  
+  }
+}
+
+downhill(f,df,2.5)
+downhill(f,df,-1)
+```
