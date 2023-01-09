@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ---title: "AS3"
 author: "YinxuanHuang"
 date: "2023-01-06"
@@ -83,7 +88,7 @@ print(f(location))
 ### x_start: start location
 ### stepsize: how far we can go by one step
 ### tol: margin of error
-downhill <- function(f,df,x_start,stepsize,tol = 0.01){
+downhill <- function(f,df,x_start,tol = 0.01){
   location1 = x_start
   i = 0
   while ( abs( df( location1))>0.1){
